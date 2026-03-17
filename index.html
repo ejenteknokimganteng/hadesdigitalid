@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hades Store</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#6b7cff,#6a5cff);
+color:white;
+transition:0.3s;
+}
+
+/* BANNER */
+.banner{
+width:100%;
+height:180px;
+overflow:hidden;
+}
+.banner img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.storeInfo{
+background:white;
+color:black;
+margin:15px;
+padding:20px;
+border-radius:15px;
+text-align:center;
+margin-top:-30px;
+box-shadow:0 5px 20px rgba(0,0,0,0.3);
+}
+
+.rating{color:#ffc107}
+
+/* MENU */
+.menu{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+padding:15px;
+}
+
+.card{
+background:white;
+color:black;
+padding:25px;
+border-radius:15px;
+text-align:center;
+box-shadow:0 5px 20px rgba(0,0,0,0.3);
+transition:0.3s;
+}
+
+.card:hover{animation:bounce 0.4s;}
+.card:active{transform:scale(0.95);}
+
+button{
+background:#6b7cff;
+color:white;
+border:none;
+padding:10px 15px;
+border-radius:10px;
+cursor:pointer;
+}
+
+button:active{transform:scale(0.9);}
+
+/* CART */
+.cartIcon{
+position:fixed;
+top:20px;
+right:20px;
+background:white;
+color:black;
+padding:10px 15px;
+border-radius:30px;
+font-weight:bold;
+box-shadow:0 5px 15px rgba(0,0,0,0.3);
+z-index:999;
+}
+
+#cartCount{color:red}
+
+/* POPUP */
+.dmPopup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+display:none;
+align-items:center;
+justify-content:center;
+}
+
+.dmPopup.active{display:flex;}
+
+.dmBox{
+background:white;
+color:black;
+padding:20px;
+border-radius:15px;
+max-height:400px;
+overflow:auto;
+width:300px;
+position:relative;
+animation:popupIn 0.3s;
+}
+
+.closeDM{
+position:absolute;
+top:10px;
+right:15px;
+font-size:20px;
+cursor:pointer;
+}
+
+.dmList{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:10px;
+}
+
+/* CART POPUP */
+.cartPopup{
+position:fixed;
+bottom:-400px;
+left:0;
+width:100%;
+background:white;
+color:black;
+padding:20px;
+border-radius:20px 20px 0 0;
+transition:0.5s;
+}
+
+.cartPopup.active{bottom:0;}
+
+/* SECTION */
+.section-title{
+font-size:20px;
+margin:20px;
+font-weight:bold;
+}
+
+.faq{padding:15px;}
+
+.faq-item{
+background:white;
+color:black;
+padding:15px;
+border-radius:10px;
+margin-bottom:10px;
+cursor:pointer;
+}
+
+.faq-answer{
+display:none;
+margin-top:10px;
+color:#555;
+}
+
+/* TESTI */
+.testi{padding:15px;}
+.testi-card{
+background:white;
+color:black;
+padding:15px;
+border-radius:10px;
+margin-bottom:10px;
+}
+
+/* FEATURE */
+.feature{padding:15px;}
+.feature-card{
+background:white;
+color:black;
+padding:20px;
+border-radius:10px;
+margin-bottom:10px;
+text-align:center;
+}
+
+/* NAVBAR */
+.navbar{
+position:fixed;
+bottom:0;
+width:100%;
+background:white;
+display:flex;
+justify-content:space-around;
+padding:10px;
+color:black;
+}
+
+/* DARK MODE */
+.dark{
+background:#111;
+color:white;
+}
+
+.dark .card,
+.dark .faq-item,
+.dark .testi-card,
+.dark .feature-card,
+.dark .storeInfo{
+background:#222;
+color:white;
+}
+
+/* MOON */
+.moon{
+position:fixed;
+right:20px;
+bottom:80px;
+background:#000;
+padding:15px;
+border-radius:50%;
+cursor:pointer;
+}
+
+/* ANIMASI */
+@keyframes popupIn{
+0%{transform:scale(0.6);opacity:0;}
+100%{transform:scale(1);opacity:1;}
+}
+
+@keyframes bounce{
+50%{transform:scale(1.1);}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="banner">
+<img src="banner.jpg">
+</div>
+
+<div class="storeInfo">
+<h2>HADES STORE</h2>
+<p class="rating">⭐ 4.9 | Free Fee</p>
+<p>Top Up Game & Jasa Website</p>
+</div>
+
+<div class="cartIcon" onclick="openCart()">🛒 <span id="cartCount">0</span></div>
+
+<div class="menu">
+
+<div class="card">
+🎮
+<h3>Mobile Legends</h3>
+<button onclick="openML()">Pilih</button>
+</div>
+
+<div class="card">
+🔥
+<h3>Free Fire</h3>
+<button onclick="openFF()">Pilih</button>
+</div>
+
+<div class="card">
+💻
+<h3>Jasa Website</h3>
+<button onclick="openWeb()">Pilih</button>
+</div>
+
+</div>
+
+<!-- FAQ -->
+<div class="section-title">FAQ</div>
+<div class="faq">
+<div class="faq-item" onclick="toggleFAQ(this)">
+Cara order?
+<div class="faq-answer">Pilih produk lalu checkout</div>
+</div>
+</div>
+
+<!-- TESTI -->
+<div class="section-title">Testimoni</div>
+<div class="testi">
+<div class="testi-card">⭐⭐⭐⭐⭐ Pelayanan cepat!</div>
+</div>
+
+<!-- FEATURE -->
+<div class="section-title">Kenapa Kami?</div>
+<div class="feature">
+<div class="feature-card">🚚 Cepat</div>
+<div class="feature-card">🛡️ Aman</div>
+</div>
+
+<!-- DARK MODE -->
+<div class="moon" onclick="darkMode()">🌙</div>
+
+<!-- NAVBAR -->
+<div class="navbar">
+<div>🏠</div>
+<div>🔍</div>
+<div onclick="openCart()">🛒</div>
+<div onclick="openAbout()">👤</div>
+</div>
+
+<!-- POPUP DM -->
+<div id="dmPopup" class="dmPopup">
+<div class="dmBox">
+<div class="closeDM" onclick="closeDM()">❌</div>
+<h3>Pilih</h3>
+<div id="dmList" class="dmList"></div>
+</div>
+</div>
+
+<!-- POPUP WEB -->
+<div id="webPopup" class="dmPopup">
+<div class="dmBox">
+<div class="closeDM" onclick="closeWeb()">❌</div>
+<h3>Paket</h3>
+<div class="dmList">
+<button onclick="selectWeb('Website Sekolah',200000)">Sekolah 200K</button>
+<button onclick="selectWeb('Website Store',250000)">Store 250K</button>
+</div>
+</div>
+</div>
+
+<!-- POPUP ABOUT -->
+<div id="aboutPopup" class="dmPopup">
+<div class="dmBox">
+<div class="closeDM" onclick="closeAbout()">❌</div>
+<h3>Tentang Kami</h3>
+
+<p><b>HADES STORE</b> adalah layanan digital:</p>
+
+<ul>
+<li>🎮 Top Up Game</li>
+<li>💻 Jasa Website</li>
+<li>⚡ Proses Cepat</li>
+<li>🛡️ Aman & Terpercaya</li>
+</ul>
+
+</div>
+</div>
+
+<!-- CART -->
+<div id="cartPopup" class="cartPopup">
+<h3>Keranjang</h3>
+<div id="cartItems"></div>
+<h4 id="cartTotal">Total: Rp0</h4>
+<button onclick="checkout()">Bayar</button>
+</div>
+
+<script>
+
+let cart=[]
+let total=0
+
+function addToCart(n,h){
+cart.push({n,h})
+total+=h
+updateCart()
+}
+
+function updateCart(){
+document.getElementById("cartCount").innerText=cart.length
+let html=""
+cart.forEach(i=>{html+=i.n+" - Rp"+i.h+"<br>"})
+document.getElementById("cartItems").innerHTML=html
+document.getElementById("cartTotal").innerText="Total: Rp"+total
+}
+
+function openCart(){
+document.getElementById("cartPopup").classList.toggle("active")
+}
+
+function checkout(){
+let text="Order:%0A"
+cart.forEach(i=>{text+=i.n+" - Rp"+i.h+"%0A"})
+window.location.href="https://wa.me/628xxxx?text="+text
+}
+
+/* ML */
+function openML(){
+let list=document.getElementById("dmList")
+list.innerHTML=""
+for(let i=1;i<=86;i++){
+list.innerHTML+=`<button onclick="selectDM('ML ${i}',${i*1000})">${i} DM</button>`
+}
+document.getElementById("dmPopup").classList.add("active")
+}
+
+/* FF */
+function openFF(){
+let list=document.getElementById("dmList")
+list.innerHTML=""
+for(let i=1;i<=96;i++){
+list.innerHTML+=`<button onclick="selectDM('FF ${i}',${i*1000})">${i} DM</button>`
+}
+document.getElementById("dmPopup").classList.add("active")
+}
+
+function selectDM(n,h){
+addToCart(n,h)
+closeDM()
+}
+
+function closeDM(){
+document.getElementById("dmPopup").classList.remove("active")
+}
+
+/* WEB */
+function openWeb(){
+document.getElementById("webPopup").classList.add("active")
+}
+
+function closeWeb(){
+document.getElementById("webPopup").classList.remove("active")
+}
+
+function selectWeb(n,h){
+addToCart(n,h)
+closeWeb()
+}
+
+/* FAQ */
+function toggleFAQ(el){
+let ans=el.querySelector(".faq-answer")
+ans.style.display = ans.style.display=="block"?"none":"block"
+}
+
+/* DARK MODE */
+function darkMode(){
+document.body.classList.toggle("dark")
+}
+
+/* ABOUT */
+function openAbout(){
+document.getElementById("aboutPopup").classList.add("active")
+}
+
+function closeAbout(){
+document.getElementById("aboutPopup").classList.remove("active")
+}
+
+</script>
+
+</body>
+</html>
